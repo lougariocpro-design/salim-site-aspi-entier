@@ -1,22 +1,35 @@
-document.getElementById("bt").addEventListener("click", async () => {
+let iAngle = 0;
+let iDistance = 0;
+let direction = 1;
+let radarColor = '#00ff00';
 
-if (!navigator.bluetooth) {
-alert("Bluetooth non supporté");
-return;
+function setup() {
+    let canvas = createCanvas(1200, 700);
+    canvas.parent(document.body);
+    angleMode(DEGREES);
 }
 
-try {
+function draw() {
+    background(0);
+    stroke(radarColor);
+    strokeWeight(2);
 
-const device = await navigator.bluetooth.requestDevice({
-acceptAllDevices: true
+    // Simuler un point radar
+    let x = width/2 + cos(iAngle) * iDistance;
+    let y = height/2 + sin(iAngle) * iDistance;
+    point(x, y);
+
+    iAngle += direction;
+    if(iAngle > 360) iAngle = 0;
+    iDistance = random(50, 300);
+}
+
+// Changer couleur du radar
+document.getElementById('radarColor').addEventListener('input', (e) => {
+    radarColor = e.target.value;
 });
 
-alert("Appareil choisi : " + device.name);
-
-} catch (error) {
-
-alert("Erreur : " + error);
-
-}
-
+// Bluetooth (simulé pour navigateur)
+document.getElementById('bluetoothBtn').addEventListener('click', () => {
+    alert("Connexion Bluetooth en développement...");
 });
