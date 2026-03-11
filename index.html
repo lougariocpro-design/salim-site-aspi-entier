@@ -1,44 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Bluetooth Radar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Radar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <header>
+        <h1>Radar en temps réel</h1>
+    </header>
 
-<body style="text-align:center;margin-top:100px;">
+    <main>
+        <canvas id="radarCanvas" width="1200" height="700"></canvas>
 
-<h1>Connexion Bluetooth</h1>
+        <div class="controls">
+            <button id="bluetoothBtn">Connexion Bluetooth</button>
+            <input type="color" id="radarColor" value="#00ff00">
+        </div>
+    </main>
 
-<button id="connect">
-Connexion Bluetooth
-</button>
-
-<script>
-
-document.getElementById("connect").addEventListener("click", async () => {
-
-if (!navigator.bluetooth) {
-alert("Bluetooth non supporté");
-return;
-}
-
-try {
-
-const device = await navigator.bluetooth.requestDevice({
-acceptAllDevices: true
-});
-
-alert("Appareil sélectionné : " + device.name);
-
-} catch(e) {
-
-console.log(e);
-
-}
-
-});
-
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
