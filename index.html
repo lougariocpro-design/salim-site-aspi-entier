@@ -1,63 +1,20 @@
-<div style="text-align:center; margin-top:30px;">
+<!DOCTYPE html>
+<html>
 
-  <!-- Bouton Bluetooth -->
-  <button onclick="connectBluetooth()" 
-    style="padding:12px 25px; font-size:16px; margin-bottom:30px; cursor:pointer;">
-    🔵 Connexion Bluetooth
-  </button>
+<head>
+<meta charset="UTF-8">
+<title>Bluetooth Test</title>
+</head>
 
-  <br>
+<body style="text-align:center;margin-top:100px;">
 
-  <!-- Conteneur des flèches -->
-  <div style="display:flex; justify-content:center; gap:20px;">
+<h1>Test Bluetooth</h1>
 
-    <button onclick="sendCommand('L')" 
-      style="font-size:40px; padding:20px; cursor:pointer;">
-      ⬅️
-    </button>
+<button id="bt">
+Connexion Bluetooth
+</button>
 
-    <button onclick="sendCommand('F')" 
-      style="font-size:40px; padding:20px; cursor:pointer;">
-      ⬆️
-    </button>
+<script src="script.js"></script>
 
-    <button onclick="sendCommand('B')" 
-      style="font-size:40px; padding:20px; cursor:pointer;">
-      ⬇️
-    </button>
-
-    <button onclick="sendCommand('R')" 
-      style="font-size:40px; padding:20px; cursor:pointer;">
-      ➡️
-    </button>
-
-  </div>
-
-</div>
-
-<script>
-let device;
-let characteristic;
-
-async function connectBluetooth() {
-  device = await navigator.bluetooth.requestDevice({
-    acceptAllDevices: true,
-    optionalServices: ['00001101-0000-1000-8000-00805f9b34fb']
-  });
-
-  const server = await device.gatt.connect();
-  const service = await server.getPrimaryService('00001101-0000-1000-8000-00805f9b34fb');
-  characteristic = await service.getCharacteristic('00001101-0000-1000-8000-00805f9b34fb');
-
-  alert("✅ Connecté !");
-}
-
-function sendCommand(cmd) {
-  if (!characteristic) {
-    alert("⚠️ Connecte d'abord le Bluetooth !");
-    return;
-  }
-  const encoder = new TextEncoder();
-  characteristic.writeValue(encoder.encode(cmd));
-}
-</script>
+</body>
+</html>
