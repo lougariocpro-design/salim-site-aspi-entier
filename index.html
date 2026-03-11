@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
-<title>Bluetooth Test</title>
+<title>Bluetooth Radar</title>
 </head>
 
 <body style="text-align:center;margin-top:100px;">
 
-<h1>Test Bluetooth</h1>
+<h1>Connexion Bluetooth</h1>
 
-<button id="bt">
+<button id="connect">
 Connexion Bluetooth
 </button>
 
-<script src="script.js"></script>
+<script>
+
+document.getElementById("connect").addEventListener("click", async () => {
+
+if (!navigator.bluetooth) {
+alert("Bluetooth non supporté");
+return;
+}
+
+try {
+
+const device = await navigator.bluetooth.requestDevice({
+acceptAllDevices: true
+});
+
+alert("Appareil sélectionné : " + device.name);
+
+} catch(e) {
+
+console.log(e);
+
+}
+
+});
+
+</script>
 
 </body>
 </html>
