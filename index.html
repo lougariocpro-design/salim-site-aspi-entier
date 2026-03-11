@@ -1,36 +1,63 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Radar Arduino</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<div style="text-align:center; margin-top:30px;">
 
-<body>
+  <!-- Bouton Bluetooth -->
+  <button onclick="connectBluetooth()" 
+    style="padding:12px 25px; font-size:16px; margin-bottom:30px; cursor:pointer;">
+    🔵 Connexion Bluetooth
+  </button>
 
-<h1>Radar Arduino</h1>
+  <br>
 
-<button class="bluetooth" onclick="connectBluetooth()">
-Connexion Bluetooth
-</button>
+  <!-- Conteneur des flèches -->
+  <div style="display:flex; justify-content:center; gap:20px;">
 
-<div class="radar-box">
-<canvas id="radarCanvas"></canvas>
+    <button onclick="sendCommand('L')" 
+      style="font-size:40px; padding:20px; cursor:pointer;">
+      ⬅️
+    </button>
+
+    <button onclick="sendCommand('F')" 
+      style="font-size:40px; padding:20px; cursor:pointer;">
+      ⬆️
+    </button>
+
+    <button onclick="sendCommand('B')" 
+      style="font-size:40px; padding:20px; cursor:pointer;">
+      ⬇️
+    </button>
+
+    <button onclick="sendCommand('R')" 
+      style="font-size:40px; padding:20px; cursor:pointer;">
+      ➡️
+    </button>
+
+  </div>
+
 </div>
 
-<div class="controls">
+<script>
+let device;
+let characteristic;
 
-<button onclick="sendCommand('F')">⬆</button>
+async function connectBluetooth() {
+  device = await navigator.bluetooth.requestDevice({
+    acceptAllDevices: true,
+    optionalServices: ['00001101-0000-1000-8000-00805f9b34fb']
+  });
 
-<div>
-<button onclick="sendCommand('L')">⬅</button>
-<button onclick="sendCommand('B')">⬇</button>
-<button onclick="sendCommand('R')">➡</button>
-</div>
+  const server = await device.gatt.connect();
+  const service = await server.getPrimaryService('00001101-0000-1000-8000-00805f9b34fb');
+  characteristic = await service.getCharacteristic('00001101-0000-1000-8000-00805f9b34fb');
 
-</div>
+  alert("✅ Connecté !");
+}
 
-<script src="script.js"></script>
-
-</body>
-</html>
+function sendCommand(cmd) {
+  if (!characteristic) {
+    alert("⚠️ Connecte d'abord le Bluetooth !");
+    return;
+  }
+  const encoder = new TextEncoder();
+  characteristic.writeValue(encoder.encode(cmd));
+}
+</script>
