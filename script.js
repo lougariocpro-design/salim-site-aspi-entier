@@ -1,36 +1,22 @@
-let device = null;
-
-async function connectBluetooth() {
+document.getElementById("bt").addEventListener("click", async () => {
 
 if (!navigator.bluetooth) {
-alert("Bluetooth non supporté sur ce navigateur");
+alert("Bluetooth non supporté");
 return;
 }
 
 try {
 
-device = await navigator.bluetooth.requestDevice({
+const device = await navigator.bluetooth.requestDevice({
 acceptAllDevices: true
 });
 
-alert("Appareil sélectionné : " + device.name);
+alert("Appareil choisi : " + device.name);
 
 } catch (error) {
 
-console.log(error);
-alert("Connexion annulée ou erreur");
+alert("Erreur : " + error);
 
 }
 
-}
-
-function sendCommand(cmd) {
-
-if (!device) {
-alert("Connecte le Bluetooth d'abord");
-return;
-}
-
-console.log("Commande :", cmd);
-
-}
+});
