@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Radar Arduino</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Radar Arduino</h1>
+
+<button class="bluetooth" onclick="connectBluetooth()">
+Connexion Bluetooth
+</button>
+
+<div id="radar-container">
+<canvas id="radarCanvas"></canvas>
+</div>
+
+<div class="controls">
+
+<button onclick="sendCommand('F')">⬆</button>
+
+<div>
+<button onclick="sendCommand('L')">⬅</button>
+<button onclick="sendCommand('B')">⬇</button>
+<button onclick="sendCommand('R')">➡</button>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
